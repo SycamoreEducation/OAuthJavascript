@@ -79,7 +79,7 @@ $(document).ready(function() {
         $("#login").css("display", "none");
         $("#logout").css("display", "block");
         
-        $("#results").prepend("Your Access Token is: " + localStorage.getItem("sycamore_auth") );
+        $("#results").show().prepend("Your Access Token is: " + localStorage.getItem("sycamore_auth") );
         $("#fetch_me").css("display", "block");
     }
         
@@ -107,7 +107,6 @@ $(document).ready(function() {
             //stringify the object to store in localStorage
             // NOTE: will need to be JSON.parse'd when referencing it
             localStorage.setItem("me", JSON.stringify(data) );
-            $("#results").show();
             $("#me").show().empty().append(localStorage.getItem("me"));
         })
         .fail(function(xhr, statusText, errorThrown) {

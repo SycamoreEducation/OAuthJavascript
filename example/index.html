@@ -15,6 +15,7 @@
         }
     
         #results {
+            display: none;
             text-align: center;
         }
     
@@ -24,8 +25,7 @@
         
         #fetch_me {
             display: none;
-            margin: 0 auto;
-            margin-top: 15px;
+            margin: 15px auto;
         }
         
         pre {
@@ -77,7 +77,7 @@ $(document).ready(function() {
         $("#login").css("display", "none");
         $("#logout").css("display", "block");
         
-        $("#results").prepend("Your Access Token is: " + localStorage.getItem("sycamore_auth") );
+        $("#results").show().prepend("Your Access Token is: " + localStorage.getItem("sycamore_auth") );
         $("#fetch_me").css("display", "block");
     }
         
@@ -92,7 +92,7 @@ $(document).ready(function() {
     $("#fetch_me").click(function(){
         //if there is no data for this user already saved
         $.ajax({
-           url: "http://dev.sycamoreeducation.com/api/v1/Me",
+           url: "https://www.sycamoreeducation.com/api/v1/Me",
            type: "GET",
            datatype: 'json',
            processData: false,

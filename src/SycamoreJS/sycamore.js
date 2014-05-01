@@ -1,15 +1,5 @@
-<html>
-<head>
-    <title>Sycamore OAuth JS Demo</title>
-</head>
-<body>
-    
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-<script src="sycamore.js"></script>
-<script>
-
-var client_id = "53349dee515d5"; // Replace text in quotes with your API Key
-var callback_uri = "http://SycamoreEducation.github.io/OAuthJavascript/oauth.html";
+var client_id = "YOUR_CLIENT_ID"; // Replace text in quotes with your API Key
+var callback_uri = "YOUR_CALLBACK_URI";
 
 // NOTE: YOU ALSO MUST set Redirect URI for API Key to full home url for this HTML/JS document
 // The Redirect URI provided MUST match the callback_uri value exactly - this is part of the OAuth 2 Standard,
@@ -69,12 +59,7 @@ if (window.location.hash.length == 0) {
     //setSessionStorage(oAuthData[0]);
     //setCookie(oAuthData[0]);
   
-    //hit the /Me endpoint to store specific user details
-
     // Uncomment the following line to redirect
     window.open("index.html", "_self");
    
 }
-</script>
-</body>
-</html>

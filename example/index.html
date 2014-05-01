@@ -1,0 +1,119 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <title>Sycamore OAuth JS Demo</title>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+    <style>
+        body {
+            padding-top: 50px;
+        }
+    
+        .starter-template {
+            padding: 40px 15px;
+            text-align: center;
+        }
+    
+        #results {
+            display: none;
+            text-align: center;
+        }
+    
+        #logout {
+            display: none;
+        }
+        
+        #fetch_me {
+            display: none;
+            margin: 15px auto;
+        }
+        
+        pre {
+            margin: 25px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Sycamore OAuth JS Demo</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <form class="navbar-form navbar-right" role="form">
+            <a id="login" href="oauth.html"><button type="button" class="btn btn-success">Login with Sycamore</button></a>
+            <button type="button" class="btn btn-success" id="logout">Sign Out</button>
+            </form>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+        <div class="starter-template">
+            <h1>Sycamore OAuth2.0 Javascript Example </h1>
+            <p class="lead">Click on the 'Login With Sycamore' button to prompt a user for authorization.<br> Once redirected, a button will be enabled to poll the Sycamore API and return data.</p>
+        </div>
+
+        <div id="results">
+            <button type="button" id="fetch_me" class="btn btn-primary">Click To Get Your Personal Information</button>
+            <pre id="me"></pre>
+        </div>
+    </div><!-- /.container -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script src="sycamore.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    //check to see if the access token is present in local storage
+    if ( localStorage.getItem('sycamore_auth') ) {
+        $("#login").css("display", "none");
+        $("#logout").css("display", "block");
+        
+        $("#results").show().prepend("Your Access Token is: " + localStorage.getItem("sycamore_auth") );
+        $("#fetch_me").css("display", "block");
+    }
+        
+    //when logging out, clear access token and present login button
+    $("#logout").click(function(){
+        localStorage.clear();
+        $("#login").css("display", "block");
+        $("#logout").css("display", "none");
+        $("#results").empty();
+    });
+    
+    $("#fetch_me").click(function(){
+        //if there is no data for this user already saved
+        $.ajax({
+           url: "https://www.sycamoreeducation.com/api/v1/Me",
+           type: "GET",
+           datatype: 'json',
+           processData: false,
+           beforeSend: function(xhr){
+                var access_token = localStorage.getItem("sycamore_auth");
+                xhr.setRequestHeader('Authorization', 'Bearer '+access_token); 
+           }
+        })
+        .done(function(data, statusText, xhr){
+            //stringify the object to store in localStorage
+            // NOTE: will need to be JSON.parse'd when referencing it
+            localStorage.setItem("me", JSON.stringify(data) );
+            $("#me").show().empty().append(localStorage.getItem("me"));
+        })
+        .fail(function(xhr, statusText, errorThrown) {
+            console.log("Failed to connect to API"); 
+        });
+    });
+});
+</script>
+    
+</body>
+</html>
+

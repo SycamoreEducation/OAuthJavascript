@@ -43,7 +43,7 @@ if (window.location.hash.length == 0) {
     var path = 'http://dev.sycamoreeducation.com/oauth/authorize.php?';
     var queryParams = ['client_id=' + client_id,
                        'redirect_uri=' + callback_uri,
-                       'scope=general open',
+                       'scope=general open individual',
                        'response_type=token'];
     var query = queryParams.join('&');
     var url = path + query;

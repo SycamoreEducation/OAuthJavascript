@@ -40,7 +40,7 @@ function setSessionStorage(token){
 
 // If there is no parameter hash, redirect to sycamore for authorization. Otherwise, request is callback so parse values from hash and display in browser
 if (window.location.hash.length == 0) {
-    var path = 'http://dev.sycamoreeducation.com/oauth/authorize.php?';
+    var path = 'https://app.sycamoreeducation.com/oauth/authorize.php?';
     var queryParams = ['client_id=' + client_id,
                        'redirect_uri=' + callback_uri,
                        'scope=general open individual',
